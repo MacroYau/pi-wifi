@@ -119,8 +119,11 @@ function prepareConnectionDetails(details) {
   }
 
   if (details.hasOwnProperty('eap')) params.eap = details.eap;
-  if (details.hasOwnProperty('phase1')) params.phase1 = details.phase1;
-  if (details.hasOwnProperty('phase2')) params.phase2 = details.phase2;
+  if (details.hasOwnProperty('pairwise')) params.pairwise = details.pairwise;
+  if (details.hasOwnProperty('group')) params.group = details.group;
+  if (details.hasOwnProperty('ca_cert')) params.ca_cert = '\'"' + details.ca_cert + '"\'';
+  if (details.hasOwnProperty('phase1')) params.phase1 = '\'"' + details.phase1 + '"\'';
+  if (details.hasOwnProperty('phase2')) params.phase2 = '\'"' + details.phase2 + '"\'';
   if (details.hasOwnProperty('key_mgmt')) params.key_mgmt = details.key_mgmt; //Add Key management if found
 
   return params;
