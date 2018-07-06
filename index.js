@@ -127,6 +127,25 @@ function prepareConnectionDetails(details) {
 }
 
 /**
+* @method removeConnection
+* @description Remove the network with specified SSID in the known networks list
+* @param {string} ssid Network SSID
+* @param {function} callback Returns error if any network with the specified SSID not found
+*/
+function removeConnection(ssid, callback) {
+  findConnection(ssid, function(err, networkId) {
+    if (err) return callback(err);
+    tools.wpa.remove_network(currentInterface, networkId, function(err) {
+      if (!err) {
+        tools.wpa.save_config(currentInterface, function(err) {
+          return callback(err);
+        });
+      }
+    });
+  });
+}
+
+/**
 * @method connection
 * @description Connects to a network with the parameters specified (This can connect to open and secure networks including EAP 802.1x)
 * @param {Object} details Network details
@@ -560,5 +579,6 @@ module.exports = {
   scan: scan,
   setCurrentInterface: setCurrentInterface,
   startSupplicant: startSupplicant,
-  status: status
+  status: status,
+  forget: removeConnection
 }
